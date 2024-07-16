@@ -25,6 +25,10 @@
   <link rel="stylesheet" href="http://localhost/examfinal/app/asset/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="http://localhost/examfinal/app/asset/plugins/summernote/summernote-bs4.min.css">
+  <!-- MAIN CSS -->
+   <link rel="stylesheet" href="http://localhost/examfinal/app/asset/css/updateContent.css">
+
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

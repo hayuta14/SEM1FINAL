@@ -7,6 +7,7 @@ class AuthMiddleware {
     }
     public function execute($controller = "", $action = "") {
         if($controller == "admin") {
+            
             if(!isset($_SESSION["user"])) {
                 header("Location: http://localhost/examfinal/user/login");
             } else {
@@ -17,9 +18,9 @@ class AuthMiddleware {
             }
         } else {
             if(!isset($_SESSION["user"])) {
-                if(empty($action) || in_array($controller."/".$action, $this->actions)) {
-                    $this->handleError("403");
-                }
+                // if(empty($action) || in_array($controller."/".$action, $this->actions)) {
+                //     $this->handleError("403");
+                // }
             }
         }
     }

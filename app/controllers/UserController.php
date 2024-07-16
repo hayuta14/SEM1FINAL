@@ -13,7 +13,7 @@ class UserController  extends BaseController {
             if(isset($user) && $user) {
                 $_SESSION["user"] = $user;
                 if($user["role"] == "admin") {
-                    header("Location: http://localhost/examfinal/admin/index");
+                    header("Location: http://localhost/examfinal/home/index");
                 } else {
                     header("Location: http://localhost/examfinal/home/index");
                 }
@@ -59,7 +59,11 @@ class UserController  extends BaseController {
 
         //onpen form
     }
-
+    public function nextPage(){
+        if(isset($_GET['page-nr'])){
+            $page = $_GET['page-nr'] + 1;
+        }
+    }
     public function listUsers() {
         $listUser =  $this->__model->listUsers();
         $this->view("layouts/client_layout", ["content"=>"user/listUser", "listUser"=>$listUser]);

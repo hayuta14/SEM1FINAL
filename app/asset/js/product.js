@@ -72,7 +72,7 @@ tabContents = document.querySelectorAll('[content]');
     })
 /*===================COUNTDOWN DEAL 1===========*/
 
-const countDownDate1 = new Date("Jul 15, 2024 00:00:00").getTime();
+const countDownDate1 = new Date("Jul 30, 2024 00:00:00").getTime();
 const interval1 = setInterval(()=>{
     const now1 = new Date().getTime();
     const duration1 = countDownDate1 - now1;

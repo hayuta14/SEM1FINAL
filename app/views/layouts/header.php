@@ -5,6 +5,7 @@
                 <img src="http://localhost/examfinal/app/asset/img/baker_bite-logo.png">
             </a>
             <div class="nav-links" id="navLinks">
+                
             <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
                 <ul>
                     <li><a href="http://localhost/examfinal/home/index">HOME</a></li>
@@ -28,7 +29,16 @@
                         <?php endif; ?>
 
                     </li>
+                    <?php 
+                        if(isset($_SESSION["user"])&&$_SESSION["user"]["role"]=="admin"):
+                    ?>
+                    <li><a href="http://localhost/examfinal/admin/index">ADMIN PAGE</a></li>
+                    <?php else : ?>
+                     
+                        <span></span>
+                    <?php endif; ?>
                 </ul>
+                
             </div>
             <i class="fa-solid fa-bars" onclick="showMenu()"></i>
         </nav>
@@ -36,6 +46,7 @@
         <div class="text-box">
             <h1 class="nav__content">Welcome To Bakerz Bite</h1>
             <p>Where smiles are served daily.</p>
-            <a href="" class="hero-btn">Visit us to know more</a>
+            <a href="http://localhost/examfinal/product/index" class="hero-btn">BUY NOW !</a>
         </div>
+        
     </section>

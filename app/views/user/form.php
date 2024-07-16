@@ -9,7 +9,7 @@
     $user = $data["user"] ;
 ?>
 <body>
-    <form action="http://localhost/mvc/user/execute" method="POST">
+    <form action="http://localhost/examfinal/user/execute" method="POST">
         <input type="hidden" name="id" value='<?php echo ($user)  ? $user->id : "" ?>'>
         <input type="text" name="username" value='<?php echo ($user) ? $user->username : "" ?>' placeholder="input username">
         <input type="text" name="password" value='<?php echo ($user) ? $user->password : "" ?>' placeholder="input password">

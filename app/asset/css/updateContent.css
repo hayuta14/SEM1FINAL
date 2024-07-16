@@ -1,0 +1,86 @@
+table {
+    border-collapse: collapse;
+    width: 95%;
+    margin: 0px 20px;
+    
+    align-items: center;
+  }
+  
+  .control__button {
+    background-color: aqua;
+    color: white;
+    padding: 5px 5px;
+    border-radius: 5px;
+    margin-right: 3px;
+  }
+
+  .delete {
+    background-color: red;
+  }
+  th, td {
+    text-align: center;
+    padding: 8px;
+    border-bottom: 1px solid white;
+  }
+  
+  tr {
+    background-color: #31383d;
+    color: white    ;
+  }
+  
+  th {
+    background-color: #04AA6D;
+    color: white;
+  }
+  .table__title,
+  .table__pagination{
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 20px 0px;
+    width: 95%;
+    border-bottom: 1px solid white;
+    background-color: #04AA6D;
+    color: white;
+}
+.table__title{
+    margin-top: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+  }
+.table__pagination{
+    height: 50px;
+    padding-top: 10px;
+    padding-left: 5px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.pagination__icon{
+    padding: 0px 5px;
+    color: white;
+}
+.table__pagination-icon{
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 10px;
+}
+  .table__title-content{
+    font-weight: 800;
+    font-size: xx-large;
+    margin-left: 20px;
+  }
+
+  .table__button{
+    margin-right: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    display: inline-block;
+    border-color: transparent;
+    cursor: pointer;
+    width: 65px;
+    height: 29px;
+    margin-top: 10px;
+    background-color: aqua;
+    color: white;
+  }

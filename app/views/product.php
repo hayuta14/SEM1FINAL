@@ -22,7 +22,7 @@
     <!--=======Header=========-->
     <!--=======HOME=========-->
     <!--=============== CATEGORIES ===============-->
-    <section class="categories container section">
+    <!-- <section class="categories container section">
         <h3 class="section__title">Choose Your Category</h3>
 
     <div class="categories__container swiper">
@@ -75,7 +75,7 @@
         </div>
         
     </div>
-    </section>
+    </section> -->
     <!--=======PRODUCTS=========-->
     <section class="products section container">
         <div class="tab__btns">
@@ -88,11 +88,13 @@
             <div class="tab__item active-tab" content id="featured">
                 <div class="product__container grid">
                     <!-- /*list product*/ -->
+                    <?php $listProduct = $data["listProduct"]; ?>
+                    <?php foreach ($listProduct as $key => $value) : ?>
                     <div class="product__item">
                         <div class="product__banner">
                             <a href="details.html" class="product__image">
-                                <img src="https://bakerz-bite.vercel.app/assets/WalnutCake.d44a1984.png" class="product__img default" alt="">
-                                <img src="https://bakerz-bite.vercel.app/assets/WalnutCake.d44a1984.png" class="product__img hover" alt="">
+                                <img src="<?php echo $value->img1?>" class="product__img default" alt="">
+                                <img src="<?php echo $value->img2?>" class="product__img hover" alt="">
                             </a>
 
                             <div class="product__actions">
@@ -107,16 +109,16 @@
                                 </a>
                             </div>
 
-                            <div class="product__badge light-pink">Hot</div>
+                            <div class="product__badge light-pink"><?php echo $value->status?></div>
                         </div>
 
                         <div class="product__content">
-                            <span class="product__category">Clothing</span>
+                            <span class="product__category"><?php echo $value->category?></span>
                             <a href="">
-                                <h3 class="product__title">Colorful Pattern Shirts</h3>
+                                <h3 class="product__title"><?php echo $value->content?></h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                            
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
@@ -124,8 +126,8 @@
                                 <i class="fa-regular fa-star"></i>
                             </div>
                             <div class="product__price flex">
-                                <span class="new__price">$238.85</span>
-                                <span class="old__price">$232.85</span>
+                                <span class="new__price">$<?php echo $value->newPrice?></span>
+                                <span class="old__price">$<?php echo $value->oldPrice?></span>
                             </div>
 
                             <a href="" class="action__btn cart__btn" aria-label="Add To Cart">
@@ -133,7 +135,8 @@
                             </a>
                         </div>
                     </div>
-                    <div class="product__item">
+                    <?php endforeach; ?>
+                     <!-- <div class="product__item">
                         <div class="product__banner">
                             <a href="details.html" class="product__image">
                                 <img src="https://bakerz-bite.vercel.app/assets/DoubleChocResize.b1b4aebf.png" class="product__img default" alt="">
@@ -161,7 +164,7 @@
                                 <h3 class="product__title">Colorful Pattern Shirts</h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                                
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
@@ -177,8 +180,8 @@
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </a>
                         </div>
-                    </div>
-                    <div class="product__item">
+                    </div> -->
+                    <!-- <div class="product__item">
                         <div class="product__banner">
                             <a href="details.html" class="product__image">
                                 <img src="https://bakerz-bite.vercel.app/assets/HoneyCakeResize.0aae142d.png" class="product__img default" alt="">
@@ -206,7 +209,7 @@
                                 <h3 class="product__title">Colorful Pattern Shirts</h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                                
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
@@ -251,7 +254,7 @@
                                 <h3 class="product__title">Colorful Pattern Shirts</h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                               
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
@@ -296,7 +299,7 @@
                                 <h3 class="product__title">Colorful Pattern Shirts</h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                               
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
@@ -341,7 +344,7 @@
                                 <h3 class="product__title">Colorful Pattern Shirts</h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                               
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
@@ -386,7 +389,7 @@
                                 <h3 class="product__title">Colorful Pattern Shirts</h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                               
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
@@ -402,7 +405,7 @@
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </a>
                         </div>
-                    </div>
+                    </div>  -->
                 </div>
             </div>
             <div class="tab__item" content id="popular">
@@ -436,7 +439,7 @@
                                 <h3 class="product__title">Colorful Pattern Shirts</h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                               
                                 <i class="fa-regular fa-star"></i>
                             </div>
                             <div class="product__price flex">
@@ -477,7 +480,7 @@
                                 <h3 class="product__title">Colorful Pattern Shirts</h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                               
                                 <i class="fa-regular fa-star"></i>
                             </div>
                             <div class="product__price flex">
@@ -518,7 +521,7 @@
                                 <h3 class="product__title">Colorful Pattern Shirts</h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                               
                                 <i class="fa-regular fa-star"></i>
                             </div>
                             <div class="product__price flex">
@@ -564,7 +567,7 @@
                                 <h3 class="product__title">Colorful Pattern Shirts</h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                               
                                 <i class="fa-regular fa-star"></i>
                             </div>
                             <div class="product__price flex">
@@ -605,7 +608,7 @@
                                 <h3 class="product__title">Colorful Pattern Shirts</h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                               
                                 <i class="fa-regular fa-star"></i>
                             </div>
                             <div class="product__price flex">
@@ -646,7 +649,7 @@
                                 <h3 class="product__title">Colorful Pattern Shirts</h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                               
                                 <i class="fa-regular fa-star"></i>
                             </div>
                             <div class="product__price flex">
@@ -665,7 +668,7 @@
     </section>
 
     <!--=======DEAL=========-->
-    <section class="deals section">
+    <!-- <section class="deals section">
         <div class="deals__container container grid">
             <div class="deals__item">
                 <div class="deals__group">
@@ -747,9 +750,9 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!--=============== NEW ARRIVALS ===============-->
-    <section class="new__arrivals container section">  
+    <!-- <section class="new__arrivals container section">  
     <h3 class="section__title"><span>NEW</span> ARRIVALS</h3>
 
     <div class="new__container swiper">
@@ -782,7 +785,7 @@
                                 <h3 class="product__title">Colorful Pattern Shirts</h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                               
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
@@ -827,7 +830,7 @@
                                 <h3 class="product__title">Colorful Pattern Shirts</h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                               
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
@@ -872,7 +875,7 @@
                                 <h3 class="product__title">Colorful Pattern Shirts</h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                               
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
@@ -917,7 +920,7 @@
                                 <h3 class="product__title">Colorful Pattern Shirts</h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                               
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
@@ -962,7 +965,7 @@
                                 <h3 class="product__title">Colorful Pattern Shirts</h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                               
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
@@ -1007,7 +1010,7 @@
                                 <h3 class="product__title">Colorful Pattern Shirts</h3>
                             </a>
                             <div class="product__rating">
-                                <!-- staricon -->
+                               
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
@@ -1035,9 +1038,9 @@
     </div>
     
 </div>     
-    </section>
+    </section> -->
     <!--=======SHOWCASE=========-->
-    <section class="showcase section">
+    <!-- <section class="showcase section">
         <div class="showcase__container container grid">
             <div class="showcase__wrapper">
                 <h3 class="section__title">Hot release</h3>
@@ -1234,7 +1237,7 @@
                         </div>
                     </div>
             </div>
-        </div>
+        </div> -->
     </section>
     <!--=============== SWIPER JS ===============-->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

@@ -65,7 +65,7 @@ nav img{
 }
 .text-box p{
     margin: 10px 0 40px;
-    font-size: 14px;
+    font-size: 30px;
     color: #fff;
 }
 .hero-btn{
@@ -316,7 +316,6 @@ h3{
     grid-template-columns: repeat(auto-fit,minmax(200px,auto));
     gap: 3.5 rem;
     background-color: #1a242f;
-    
     left: 0;
     right: 0;
     bottom: 0;
