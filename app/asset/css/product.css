@@ -566,3 +566,7 @@ button, textarea, input {
     text-overflow: ellipsis;
     margin-bottom: 0.5rem;
 }
+
+.disable {
+    display: none;
+}
