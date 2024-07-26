@@ -165,33 +165,39 @@
                                 <span class="new__price">$<?php echo $value->newPrice?></span>
                                 <span class="old__price">$<?php echo $value->oldPrice?></span>
                             </div>
-
-                            <a href="" class="action__btn cart__btn" aria-label="Add To Cart">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
+                        <form action="" class="form-submit">
+                            <input type="hidden" class="pqty" value=1>
+                            <input type="hidden" class="pid" value="<?= $value->id ?>">
+                            <input type="hidden" class="pname" value="<?= $value->content?>">
+                            <input type="hidden" class="pprice" value="<?= $value->newPrice ?>">
+                            <input type="hidden" class="pimage" value="<?= $value->img1 ?>">
+                            <input type="hidden" class="pcategory" value="<?= $value->category?>">
+                            <button  class="action__btn cart__btn addItemBtn"><i class="fa-solid fa-cart-shopping "></i></button>
+                            </form>    
                         </div>
                     </div>
                     <?php endforeach; ?>
                     
                 </div>
             </div>
+            
             <?php if(isset($_GET["page"])){
                 $page=$_GET["page"];
-                } else {
-                    $page = 1;
-                }?>
+            } else {
+                $page = 1;
+            }?>
             <div class="table__pagination">
-            <div class="table__pagination-content">Showing <?php echo isset($page)&&$page?$page:"1" ;?> of <?php echo $data["numberOfPage"];?> page</div>
-            <div class="table__pagination-icon">
-                <a class="pagination__icon" href="?page=<?php echo $page-1;?>"><i class="fa-solid fa-backward <?php echo $page==1? "disable":""?> "></i></a>
-            <?php for($x=1;$x<=$data["numberOfPage"];$x++) :?>
-                <<?php echo isset($page)&&$page==$x? "span" : "a"?> href="<?php echo isset($_GET["cake"])?  "?cake=".$_GET["cake"] : ""?><?php echo isset($_GET["cake"])? "&": "?"?>page=<?php echo $x?>"><?php echo $x?></<?php echo isset($page)&&$page==$x? "span" : "a"?>>
-            <?php endfor;?>
-            <a  class="pagination__icon" href="?page=<?php echo $page+1;?>"><i class="fa-solid fa-forward <?php echo $page==$data["numberOfPage"]? "disable":""?>"></i></a>
+                <div class="table__pagination-content">Showing <?php echo isset($page)&&$data["numberOfPage"]!=0?$page:"0" ;?> of <?php echo isset($data["numberOfPage"])?$data["numberOfPage"]:"1";?> page</div>
+                <div class="table__pagination-icon">
+                    <a class="pagination__icon" href="?page=<?php echo $page-1;?>"><i class="fa-solid fa-backward <?php echo $page==1? "disable":""?> "></i></a>
+                    <?php for($x=1;$x<=$data["numberOfPage"];$x++) :?>
+                        <<?php echo isset($page)&&$page==$x? "span" : "a"?> href="<?php echo isset($_GET["cake"])?  "?cake=".$_GET["cake"] : ""?><?php echo isset($_GET["cake"])? "&": "?"?>page=<?php echo $x?>"><?php echo $x?></<?php echo isset($page)&&$page==$x? "span" : "a"?>>
+                        <?php endfor;?>
+                        <a  class="pagination__icon" href="?page=<?php echo $page+1;?>"><i class="fa-solid fa-forward <?php echo $page==$data["numberOfPage"]||$data["numberOfPage"]==0? "disable":""?>"></i></a>
+                    </div>
+                </div>
             </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
     <!--=======DEAL=========-->
     <!-- <section class="deals section">
@@ -770,5 +776,60 @@
     <!--=======JS=========-->
     
     <script src="http://localhost/examfinal/app/asset/js/product.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+
+    // Send product details in the server
+    $(".addItemBtn").click(function(e) {
+      e.preventDefault();
+      var $form = $(this).closest(".form-submit");
+      var pid = $form.find(".pid").val();
+      var pname = $form.find(".pname").val();
+      var pprice = $form.find(".pprice").val();
+      var pimage = $form.find(".pimage").val();
+      var pcategory = $form.find(".pcategory").val();
+
+      var pqty = $form.find(".pqty").val();
+
+      $.ajax({
+        url: 'http://localhost/examfinal/product/addToCart',
+        method: 'post',
+        data: {
+          pid: pid,
+          pname: pname,
+          pprice: pprice,
+          pqty: pqty,
+          pimage: pimage,
+          pcategory: pcategory
+        },
+        success: function(response) {
+          alert(response);
+          
+          load_cart_item_number();
+        }
+      });
+    });
+    
+    // Load total no.of items added in the cart and display in the navbar
+    load_cart_item_number();
+
+    function load_cart_item_number() {
+      $.ajax({
+        url: 'http://localhost/examfinal/product/load_cart_item_number',
+        method: 'get',
+        data: {
+          cartItem: "cart_item"
+        },
+        success: function(response) {
+          $("#cart-item").html(response);
+        }
+      });
+    }
+  });
+  </script>
+
+
 </body>
 </html>

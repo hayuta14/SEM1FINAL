@@ -6,10 +6,10 @@
             </a>
             <div class="nav-links" id="navLinks">
                 
-            <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
+            <i class="fa-solid fa-xmark disable" onclick="hideMenu()"></i>
                 <ul>
                     <li><a href="http://localhost/examfinal/home/index">HOME</a></li>
-                    <li><a href="http://localhost/examfinal/product/index">PRODUCTS</a></li>
+                    <li><a href="http://localhost/examfinal/product/All">PRODUCTS</a></li>
                     <li><a href="">GALLERY</a></li>
                     <li><a href="">ABOUT US</a></li>
                     <li><a href="">CONTACT US</a></li>
@@ -37,10 +37,25 @@
                      
                         <span></span>
                     <?php endif; ?>
+                    <?php 
+                        
+                        if(isset($data["content"])&&$data["content"]=="product"):
+                    ?>
+                    <li>
+                        <a href="http://localhost/examfinal/cart/index"><i class="fa-solid fa-cart-shopping "></i>
+                        <span id="cart-item" class="badge badge-danger"></span>
+                        </a>
+                        
+                    </li>
+
+                    <?php else : ?>
+                     
+                        <span></span>
+                    <?php endif; ?>
                 </ul>
                 
             </div>
-            <i class="fa-solid fa-bars" onclick="showMenu()"></i>
+            <i class="fa-solid fa-bars disable" onclick="showMenu()"></i>
         </nav>
 
         <div class="text-box">

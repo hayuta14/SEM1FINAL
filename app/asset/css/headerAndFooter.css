@@ -82,8 +82,8 @@ nav img{
     transition: 1s;
 }
 
-nav .fa-solid {
-    display: none;
+ .fa-solid {
+    display: inline;
 
 }
 .nav__content{
@@ -181,6 +181,11 @@ nav .fa-solid {
 .icons a:hover{
     color:  #fff;
     transform: translateY(-5px);
+}
+/* cart */
+
+.disable{
+    display: inline;
 }
 
 @media (max-width:1690px){
