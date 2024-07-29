@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="http://localhost/examfinal/app/asset/css/headerAndFooter.css">
     <!--=======SWIPER CSS=========-->
     <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
     
     <link rel="stylesheet" href="http://localhost/examfinal/app/asset/css/product.css">
@@ -110,6 +110,31 @@
 
                 }
             ?>
+        <!-- Modal -->
+        <div class="modal fade " id="insertData" tabindex="-1" aria-labelledby="insertDataLabel" aria-hidden="true">
+        <div class="modal-dialog fixed-top">
+            <div class="modal-content">
+            
+               
+            <div class="view_user_data">
+                
+
+
+                
+            </div>
+            <div class="modal-footer">
+                    <button  class="btn btn-secondary" >View detail</button>
+                    <form action="" class="form-submit">
+                            <input type="hidden" class="pqty" value=1>
+                            <input type="hidden" class="pid" value="">
+                    <button  class="btn btn-primary addItemBtn" data-dismiss="modal">Add to cart</button>
+                                
+                    </form>   
+            </div>
+            
+        </div>
+        </div>
+        </div>
     <section class="products section container">
         <div class="tab__btns">
             <a class="tab__btn <?php echo isset($_SERVER["PATH_INFO"]) && $name == "All"? "active-tab":""; ?>" href="http://localhost/examfinal/product/All" >All</a>
@@ -126,24 +151,16 @@
                     <!-- /*list product*/ -->
                     <?php $listProduct = $data["listProduct"]; ?>
                     <?php foreach ($listProduct as $key => $value) : ?>
-                    <div class="product__item">
-                        <div class="product__banner">
-                            <a href="details.html" class="product__image">
-                                <img src="<?php echo $value->img1?>" class="product__img default" alt="">
-                                <img src="<?php echo $value->img2?>" class="product__img hover" alt="">
-                            </a>
+                        <div class="product__item">
+                            <div class="product__banner">
+                                <span class="disable user_id"><?php echo $value->id?></span>
+                                <button type="button" class="product__image view-data" data-bs-toggle="modal" data-bs-target="#insertData">
+                                    
+                                    <img src="<?php echo $value->img1?>" class="product__img default" alt="">
+                                    <img src="<?php echo $value->img2?>" class="product__img hover" alt="">
+                                </button>
 
-                            <div class="product__actions">
-                                <a href="" class="action__btn" aria-label="Quick View">
-                                    <i class="fa-regular fa-eye"></i>
-                                </a>
-                                <a href="" class="action__btn" aria-label="Add To Wishlist">
-                                    <i class="fa-regular fa-heart"></i>
-                                </a>
-                                <a href="" class="action__btn" aria-label="Compare">
-                                    <i class="fa-solid fa-shuffle"></i>
-                                </a>
-                            </div>
+                            
 
                             <div class="product__badge light-pink"><?php echo $value->status?></div>
                         </div>
@@ -173,9 +190,10 @@
                             <input type="hidden" class="pimage" value="<?= $value->img1 ?>">
                             <input type="hidden" class="pcategory" value="<?= $value->category?>">
                             <button  class="action__btn cart__btn addItemBtn"><i class="fa-solid fa-cart-shopping "></i></button>
-                            </form>    
+                        </form>    
                         </div>
                     </div>
+
                     <?php endforeach; ?>
                     
                 </div>
@@ -191,9 +209,9 @@
                 <div class="table__pagination-icon">
                     <a class="pagination__icon" href="?page=<?php echo $page-1;?>"><i class="fa-solid fa-backward <?php echo $page==1? "disable":""?> "></i></a>
                     <?php for($x=1;$x<=$data["numberOfPage"];$x++) :?>
-                        <<?php echo isset($page)&&$page==$x? "span" : "a"?> href="<?php echo isset($_GET["cake"])?  "?cake=".$_GET["cake"] : ""?><?php echo isset($_GET["cake"])? "&": "?"?>page=<?php echo $x?>"><?php echo $x?></<?php echo isset($page)&&$page==$x? "span" : "a"?>>
+                        <<?php echo isset($page)&&$page==$x? "span" : "a"?> class="pagination_content <?php echo isset($page)&&$page==$x? "active" : ""?>" href="<?php echo isset($_GET["cake"])?  "?cake=".$_GET["cake"] : ""?><?php echo isset($_GET["cake"])? "&": "?"?>page=<?php echo $x?>"><?php echo $x?></<?php echo isset($page)&&$page==$x? "span" : "a"?>>
                         <?php endfor;?>
-                        <a  class="pagination__icon" href="?page=<?php echo $page+1;?>"><i class="fa-solid fa-forward <?php echo $page==$data["numberOfPage"]||$data["numberOfPage"]==0? "disable":""?>"></i></a>
+                        <a  class="pagination__icon text-decoration-none " href="?page=<?php echo $page+1;?>"><i class="fa-solid fa-forward <?php echo $page==$data["numberOfPage"]||$data["numberOfPage"]==0? "disable":""?>"></i></a>
                     </div>
                 </div>
             </div>
@@ -283,294 +301,7 @@
             </div>
         </div>
     </section> -->
-    <!--=============== NEW ARRIVALS ===============-->
-    <!-- <section class="new__arrivals container section">  
-    <h3 class="section__title"><span>NEW</span> ARRIVALS</h3>
-
-    <div class="new__container swiper">
-    <div class="swiper-wrapper">
-                    <div class="product__item swiper-slide">
-                        <div class="product__banner">
-                            <a href="details.html" class="product__image">
-                                <img src="https://bakerz-bite.vercel.app/assets/DoubleChocResize.b1b4aebf.png" class="product__img default" alt="">
-                                <img src="https://bakerz-bite.vercel.app/assets/LemonCakeResize.f485fbe3.png" class="product__img hover" alt="">
-                            </a>
-
-                            <div class="product__actions">
-                                <a href="" class="action__btn" aria-label="Quick View">
-                                    <i class="fa-regular fa-eye"></i>
-                                </a>
-                                <a href="" class="action__btn" aria-label="Add To Wishlist">
-                                    <i class="fa-regular fa-heart"></i>
-                                </a>
-                                <a href="" class="action__btn" aria-label="Compare">
-                                    <i class="fa-solid fa-shuffle"></i>
-                                </a>
-                            </div>
-
-                            <div class="product__badge light-pink">Hot</div>
-                        </div>
-
-                        <div class="product__content">
-                            <span class="product__category">Clothing</span>
-                            <a href="">
-                                <h3 class="product__title">Colorful Pattern Shirts</h3>
-                            </a>
-                            <div class="product__rating">
-                               
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                            </div>
-                            <div class="product__price flex">
-                                <span class="new__price">$238.85</span>
-                                <span class="old__price">$232.85</span>
-                            </div>
-
-                            <a href="" class="action__btn cart__btn" aria-label="Add To Cart">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="product__item swiper-slide">
-                        <div class="product__banner">
-                            <a href="details.html" class="product__image">
-                                <img src="https://bakerz-bite.vercel.app/assets/HoneyCakeResize.0aae142d.png" class="product__img default" alt="">
-                                <img src="https://bakerz-bite.vercel.app/assets/PistachioResize.0d856fac.png" class="product__img hover" alt="">
-                            </a>
-
-                            <div class="product__actions">
-                                <a href="" class="action__btn" aria-label="Quick View">
-                                    <i class="fa-regular fa-eye"></i>
-                                </a>
-                                <a href="" class="action__btn" aria-label="Add To Wishlist">
-                                    <i class="fa-regular fa-heart"></i>
-                                </a>
-                                <a href="" class="action__btn" aria-label="Compare">
-                                    <i class="fa-solid fa-shuffle"></i>
-                                </a>
-                            </div>
-
-                            <div class="product__badge light-pink">Hot</div>
-                        </div>
-
-                        <div class="product__content">
-                            <span class="product__category">Clothing</span>
-                            <a href="">
-                                <h3 class="product__title">Colorful Pattern Shirts</h3>
-                            </a>
-                            <div class="product__rating">
-                               
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                            </div>
-                            <div class="product__price flex">
-                                <span class="new__price">$238.85</span>
-                                <span class="old__price">$232.85</span>
-                            </div>
-
-                            <a href="" class="action__btn cart__btn" aria-label="Add To Cart">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="product__item swiper-slide">
-                        <div class="product__banner">
-                            <a href="details.html" class="product__image">
-                                <img src="https://bakerz-bite.vercel.app/assets/RedVelvetCCResize.295d1232.png" class="product__img default" alt="">
-                                <img src="https://bakerz-bite.vercel.app/assets/VanillaIcingCCResize.70dbd02d.png" class="product__img hover" alt="">
-                            </a>
-
-                            <div class="product__actions">
-                                <a href="" class="action__btn" aria-label="Quick View">
-                                    <i class="fa-regular fa-eye"></i>
-                                </a>
-                                <a href="" class="action__btn" aria-label="Add To Wishlist">
-                                    <i class="fa-regular fa-heart"></i>
-                                </a>
-                                <a href="" class="action__btn" aria-label="Compare">
-                                    <i class="fa-solid fa-shuffle"></i>
-                                </a>
-                            </div>
-
-                            <div class="product__badge light-pink">Hot</div>
-                        </div>
-
-                        <div class="product__content">
-                            <span class="product__category">Clothing</span>
-                            <a href="">
-                                <h3 class="product__title">Colorful Pattern Shirts</h3>
-                            </a>
-                            <div class="product__rating">
-                               
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                            </div>
-                            <div class="product__price flex">
-                                <span class="new__price">$238.85</span>
-                                <span class="old__price">$232.85</span>
-                            </div>
-
-                            <a href="" class="action__btn cart__btn" aria-label="Add To Cart">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="product__item swiper-slide">
-                        <div class="product__banner">
-                            <a href="details.html" class="product__image">
-                                <img src="https://bakerz-bite.vercel.app/assets/DoubleChocResize.b1b4aebf.png" class="product__img default" alt="">
-                                <img src="https://bakerz-bite.vercel.app/assets/LemonCakeResize.f485fbe3.png" class="product__img hover" alt="">
-                            </a>
-
-                            <div class="product__actions">
-                                <a href="" class="action__btn" aria-label="Quick View">
-                                    <i class="fa-regular fa-eye"></i>
-                                </a>
-                                <a href="" class="action__btn" aria-label="Add To Wishlist">
-                                    <i class="fa-regular fa-heart"></i>
-                                </a>
-                                <a href="" class="action__btn" aria-label="Compare">
-                                    <i class="fa-solid fa-shuffle"></i>
-                                </a>
-                            </div>
-
-                            <div class="product__badge light-pink">Hot</div>
-                        </div>
-
-                        <div class="product__content">
-                            <span class="product__category">Clothing</span>
-                            <a href="">
-                                <h3 class="product__title">Colorful Pattern Shirts</h3>
-                            </a>
-                            <div class="product__rating">
-                               
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                            </div>
-                            <div class="product__price flex">
-                                <span class="new__price">$238.85</span>
-                                <span class="old__price">$232.85</span>
-                            </div>
-
-                            <a href="" class="action__btn cart__btn" aria-label="Add To Cart">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="product__item swiper-slide">
-                        <div class="product__banner">
-                            <a href="details.html" class="product__image">
-                                <img src="https://bakerz-bite.vercel.app/assets/HoneyCakeResize.0aae142d.png" class="product__img default" alt="">
-                                <img src="https://bakerz-bite.vercel.app/assets/PistachioResize.0d856fac.png" class="product__img hover" alt="">
-                            </a>
-
-                            <div class="product__actions">
-                                <a href="" class="action__btn" aria-label="Quick View">
-                                    <i class="fa-regular fa-eye"></i>
-                                </a>
-                                <a href="" class="action__btn" aria-label="Add To Wishlist">
-                                    <i class="fa-regular fa-heart"></i>
-                                </a>
-                                <a href="" class="action__btn" aria-label="Compare">
-                                    <i class="fa-solid fa-shuffle"></i>
-                                </a>
-                            </div>
-
-                            <div class="product__badge light-pink">Hot</div>
-                        </div>
-
-                        <div class="product__content">
-                            <span class="product__category">Clothing</span>
-                            <a href="">
-                                <h3 class="product__title">Colorful Pattern Shirts</h3>
-                            </a>
-                            <div class="product__rating">
-                               
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                            </div>
-                            <div class="product__price flex">
-                                <span class="new__price">$238.85</span>
-                                <span class="old__price">$232.85</span>
-                            </div>
-
-                            <a href="" class="action__btn cart__btn" aria-label="Add To Cart">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="product__item swiper-slide">
-                        <div class="product__banner">
-                            <a href="details.html" class="product__image">
-                                <img src="https://bakerz-bite.vercel.app/assets/RedVelvetCCResize.295d1232.png" class="product__img default" alt="">
-                                <img src="https://bakerz-bite.vercel.app/assets/VanillaIcingCCResize.70dbd02d.png" class="product__img hover" alt="">
-                            </a>
-
-                            <div class="product__actions">
-                                <a href="" class="action__btn" aria-label="Quick View">
-                                    <i class="fa-regular fa-eye"></i>
-                                </a>
-                                <a href="" class="action__btn" aria-label="Add To Wishlist">
-                                    <i class="fa-regular fa-heart"></i>
-                                </a>
-                                <a href="" class="action__btn" aria-label="Compare">
-                                    <i class="fa-solid fa-shuffle"></i>
-                                </a>
-                            </div>
-
-                            <div class="product__badge light-pink">Hot</div>
-                        </div>
-
-                        <div class="product__content">
-                            <span class="product__category">Clothing</span>
-                            <a href="">
-                                <h3 class="product__title">Colorful Pattern Shirts</h3>
-                            </a>
-                            <div class="product__rating">
-                               
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                            </div>
-                            <div class="product__price flex">
-                                <span class="new__price">$238.85</span>
-                                <span class="old__price">$232.85</span>
-                            </div>
-
-                            <a href="" class="action__btn cart__btn" aria-label="Add To Cart">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
-                        </div>
-                    </div>
-    </div>
-
-    <div class="swiper-button-next">
-        <i class="fa-solid fa-angle-right"></i>
-    </div>
-    
-    <div class="swiper-button-prev">
-        <i class="fa-solid fa-angle-left"></i>
-    </div>
-    
-</div>     
-    </section> -->
+   
     <!--=======SHOWCASE=========-->
     <!-- <section class="showcase section">
         <div class="showcase__container container grid">
@@ -771,10 +502,77 @@
             </div>
         </div> -->
     </section>
+    <script>
+        const swiper = new Swiper('.swiper', {
+  // Optional parameters
+  direction: 'vertical',
+  loop: true,
+
+  // If we need pagination
+  pagination: {
+    el: '.swiper-pagination',
+  },
+
+  // Navigation arrows
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+
+  // And if we need scrollbar
+  scrollbar: {
+    el: '.swiper-scrollbar',
+  },
+});
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('.view-data').click(function(e){
+                e.preventDefault();
+
+                var user_id = $(this).closest('.product__item').find('.user_id').text();
+                $.ajax({
+                    method: "POST",
+                    url: "http://localhost/examfinal/product/addToCart",
+                    data: {
+                        'click_view_btn': true,
+                        'user_id':user_id,
+                    },
+                    dataType: "",
+                    success: function (response){
+                        $('.view_user_data').html(response);
+                    }   
+                })
+            });
+        });
+
+
+        $(document).ready(function(){
+            $('.view-data').click(function(e){
+                e.preventDefault();
+
+                var user_id = $(this).closest('.product__item').find('.user_id').text();
+                $.ajax({
+                    method: "POST",
+                    url: "http://localhost/examfinal/product/addToCart",
+                    data: {
+                        'click_view_id_btn': true,
+                        'user_id':user_id,
+                    },
+                    dataType: "",
+                    success: function (response){
+                        $('.pid').val(response);
+                        
+                    }   
+                })
+            });
+        });
+
+    </script>
     <!--=============== SWIPER JS ===============-->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <!--=======JS=========-->
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="http://localhost/examfinal/app/asset/js/product.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
@@ -797,6 +595,7 @@
         url: 'http://localhost/examfinal/product/addToCart',
         method: 'post',
         data: {
+        'cartItem': true,
           pid: pid,
           pname: pname,
           pprice: pprice,
@@ -808,6 +607,7 @@
           alert(response);
           
           load_cart_item_number();
+          $('#insertData').modal('hide')
         }
       });
     });
@@ -820,7 +620,7 @@
         url: 'http://localhost/examfinal/product/load_cart_item_number',
         method: 'get',
         data: {
-          cartItem: "cart_item"
+            cartItem: "cart_item"
         },
         success: function(response) {
           $("#cart-item").html(response);
@@ -828,6 +628,8 @@
       });
     }
   });
+
+    
   </script>
 
 

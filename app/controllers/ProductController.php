@@ -11,28 +11,88 @@ class ProductController extends BaseController {
         $listProduct =  $this->__ProductModel->listProduct();
         $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct]);
     }
+
+    public function thankForBuy(){
+        $this->view("buySuccess");
+    }
+    /////CART///////////
     function addToCart() {
         if($_SERVER["REQUEST_METHOD"] == "POST") {
-            $id = $_POST['pid'];
-            $content = $_POST['pname'];
-            $price = $_POST['pprice'];
-            $img = $_POST['pimage'];
-            $category = $_POST['pcategory'];
-            $pamount = $_POST['pqty'];
-            $total_price = $price * $pamount;
-            $name = "product_id";
-            $data=$this->__ProductModel->checkItemInCart($id,$name);
             
-            if(!$data){
-                $this->__ProductModel->createProduct($content,$category,$price,$img,$pamount,$total_price,$id);
-                echo "update sucess";
-            } else {
-                $name="amount";
-                $data=$this->__ProductModel->checkItemInCart($id,$name);
-                $data += 1;
-                $total_price = $price * $data;
-                $this->__ProductModel->updateAmountById($id,$data,$total_price );
-                echo "ok";
+            if(isset($_POST['cartItem'])){
+                
+                $product_id = $_POST['pid'];
+               
+                $pamount = $_POST['pqty'];
+                
+                $data=$this->__ProductModel->checkItemInCart($product_id,$product_id);
+                if(isset($_SESSION["user"])){
+                    $user_id=$_SESSION["user"]["id"];
+                } else {
+                    $user_id="";
+                }
+                if(!$data){
+                    $this->__ProductModel->createProduct($pamount,$user_id,$product_id);
+                    echo "update sucess";
+                } else {
+                    $name="amount";
+                    $data=$this->__ProductModel->checkItemInCart($product_id,$name);
+                    $data += 1;
+                    $this->__ProductModel->updateAmountById($product_id,$data );
+                    echo "ok";
+                }
+            } 
+            
+            if(isset($_POST['click_view_btn'])){
+                $id = $_POST['user_id'];
+                
+                $listProduct =  $this->__ProductModel->listProductById($id);
+                foreach ($listProduct as $data) {
+                    $id         = $data->id;
+                    $content    = $data->content;
+                    $category    = $data->category;
+                    $price       = $data->newPrice;
+                    $img       = $data->img1;
+                    $img2       = $data->img2;
+                    echo'
+                        
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="insertDataLabel">'.$content.'</h1>
+                            
+                        </div>
+                        <div class="modal_content">
+                            
+                            
+                            <!-- Slider main container -->
+                            <div class="swiper">
+                            <!-- Additional required wrapper -->
+                            <div class="swiper-wrapper">
+                                <!-- Slides -->
+                                <div class="swiper-slide"><img class="img_detail" src="'.$img.'" alt=""></div>  
+                            </div>
+                                 <div class="product__rating">
+                            
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                            </div>
+                            </div>
+                            <div>Price: '.$price.'$</div>
+                        </div>
+                      
+                           
+                
+                    ';
+                }
+                
+
+            }
+
+            if(isset($_POST['click_view_id_btn'])){
+                $id = $_POST['user_id'];
+                echo $id;
             }
 
         } else {
@@ -43,7 +103,7 @@ class ProductController extends BaseController {
     // Get no.of items available in the cart table
     public function load_cart_item_number(){
         if (isset($_GET['cartItem']) && isset($_GET['cartItem']) == 'cart_item') {
-            $row=$this->__ProductModel->countProduct();   
+            $row=$this->__ProductModel->totalQuantity();   
             echo $row;            
         }
 
@@ -52,32 +112,25 @@ class ProductController extends BaseController {
     public function plusProduct(){
         if(isset($_GET["id"])){
             $id=$_GET["id"];
-            $content="id";
+            $content="product_id";
             $name="amount";
             $data=$this->__ProductModel->checkItemInCart($id,$name,$content);
-            
             $data += 1;
-            $name="price";
-            $price=$this->__ProductModel->checkItemInCart($id,$name,$content);
-            $total_price = $price * $data;
-            $this->__ProductModel->updateAmountById($id,$data,$total_price,$content );
+            $this->__ProductModel->updateAmountById($id,$data,$content );
             header("Location: http://localhost/examfinal/cart/index");
         }
     }
     public function minusProduct(){
         if(isset($_GET["id"])){
             $id=$_GET["id"];
-            $content="id";
+            $content="product_id";
             $name="amount";
             $data=$this->__ProductModel->checkItemInCart($id,$name,$content);
-            
             $data -= 1;
-            $name="price";
-            $price=$this->__ProductModel->checkItemInCart($id,$name,$content);
-            $total_price = $price * $data;
-            $this->__ProductModel->updateAmountById($id,$data,$total_price,$content );
+            $this->__ProductModel->updateAmountById($id,$data,$content );
             header("Location: http://localhost/examfinal/cart/index");
         }}
+        ///////////////////////////////////////////////////////
     public function All(){
         $_SERVER["PATH_INFO"];
         $string = explode("/",$_SERVER["PATH_INFO"]);
@@ -89,7 +142,7 @@ class ProductController extends BaseController {
         if(isset($_GET["page"])){
 
             $page = $_GET["page"];
-            $page = ($page-1)*3;
+            $page = ($page-1)*12;
         }
         $content="content";
         $action="ASC";
@@ -149,7 +202,7 @@ class ProductController extends BaseController {
         if(isset($_GET["page"])){
 
             $page = $_GET["page"];
-            $page = ($page-1)*3;
+            $page = ($page-1)*12;
         }
         $content="content";
         $action="ASC";
@@ -213,7 +266,7 @@ class ProductController extends BaseController {
         if(isset($_GET["page"])){
 
             $page = $_GET["page"];
-            $page = ($page-1)*3;
+            $page = ($page-1)*12;
         }
         $content="content";
         $action="ASC";
@@ -277,7 +330,7 @@ class ProductController extends BaseController {
         if(isset($_GET["page"])){
 
             $page = $_GET["page"];
-            $page = ($page-1)*3;
+            $page = ($page-1)*12;
         }
         $content="content";
         $action="ASC";
@@ -342,7 +395,7 @@ class ProductController extends BaseController {
         if(isset($_GET["page"])){
 
             $page = $_GET["page"];
-            $page = ($page-1)*3;
+            $page = ($page-1)*12;
         }
         $content="content";
         $action="ASC";

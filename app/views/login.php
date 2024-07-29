@@ -39,7 +39,7 @@
                             </div>
                             <div class="auth-form__under">
                                 <span style="color: red;"><?php echo isset($error) && $error == "true" ? "username or password is not correct" : "" ?></span>
-                                <input type="submit" value="sign in">
+                                <input class="btn btn--primary" type="submit" value="sign in">
                             </div>
                         </div>
 

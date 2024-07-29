@@ -10,8 +10,8 @@ class HomeController extends BaseController {
     }
     //action
     public function index() {
-        $customers = $this->__homeModel->getAllCustomers();
-        $this->view("layouts/client_layout", ["content"=>"home", "customers"=>$customers]);
+        
+        $this->view("layouts/client_layout", ["content"=>"home"]);
         
     }
     //action : create ,params [$a, $b]

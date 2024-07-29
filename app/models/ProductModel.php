@@ -8,7 +8,7 @@
 
     
     public function numOfPage($name="product",$from="1",$table="category"){
-        $row_per_page=3;
+        $row_per_page=12;
         $sql1 ="select count(*) from $name where $from";
         $stmt1 = $this->__conn->prepare($sql1);
         $stmt1->execute();
@@ -21,7 +21,26 @@
         
         try {
             if (isset($this->__conn)) {
-                $sql = " select * from $name order by $content $order limit $page,3 ";
+                $sql = " select * from $name order by $content $order limit $page,12 ";
+                $stmt = $this->__conn->prepare($sql);
+                $stmt->execute();
+                // $sql = "select * from [cake] where category = 'cake' order by $name $order  ";
+                // $stmt = $this->__conn->prepare($sql);
+                // $stmt->execute();
+                $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+                return $result;
+            }
+        } catch(Exception $e) {
+            echo $e->getMessage();
+            exit();
+        }
+    }
+
+    public function listProductById($id){
+        
+        try {
+            if (isset($this->__conn)) {
+                $sql = " select * from product where id = $id; ";
                 $stmt = $this->__conn->prepare($sql);
                 $stmt->execute();
                 // $sql = "select * from [cake] where category = 'cake' order by $name $order  ";
@@ -40,7 +59,7 @@
         
         try {
             if (isset($this->__conn)) {
-                $sql = " select * from $name ";
+                $sql = " select product_id,img1,content,newPrice,amount from cart inner join product on cart.product_id = product.id";
                 
                 $stmt = $this->__conn->prepare($sql);
                 $stmt->execute();
@@ -61,7 +80,7 @@
         try {
             if (isset($this->__conn)) {
                 
-                $sql = "select * from $name where $content = '$action' limit $page,3";
+                $sql = "select * from $name where $content = '$action' limit $page,12";
                 $stmt = $this->__conn->prepare($sql);
                 $stmt->execute();  
                 
@@ -75,24 +94,19 @@
         }
     }
 
-    public function createProduct($content,$category,$price,$img,$amount,$total_price,$product_id) { 
-        $sql = "insert into cart (`content`, `category`, `price`, `img`, `amount`, `total_price`, `product_id`) values (:content, :category, :price, :img, :amount, :total_price, :product_id)";
+    public function createProduct($amount,$user_id,$product_id) { 
+        $sql = "insert into cart (`amount`,`user_id`,`product_id`) values (:amount, :user_id, :product_id)";
         $stmt = $this->__conn->prepare($sql);
-        $stmt->bindParam("content", $content, PDO::PARAM_STR);
-        $stmt->bindParam("category", $category, PDO::PARAM_STR);   
-        $stmt->bindParam("price", $price, PDO::PARAM_STR);
-        $stmt->bindParam("img", $img, PDO::PARAM_STR);
         $stmt->bindParam("amount", $amount, PDO::PARAM_STR);
-        $stmt->bindParam("total_price", $total_price, PDO::PARAM_STR);
         $stmt->bindParam("product_id", $product_id, PDO::PARAM_STR);
-        
+        $stmt->bindParam("user_id", $user_id, PDO::PARAM_STR);
         $stmt->execute();
         
     }
 
-    public function updateAmountById($id,$amount,$price,$content="product_id" ) {
+    public function updateAmountById($id,$amount,$content="product_id" ) {
         try {  
-            $sql = "update cart set amount = :amount, total_price = $price where $content = :id";
+            $sql = "update cart set amount = :amount where $content = :id";
             
             $stmt = $this->__conn->prepare($sql);
             $stmt->bindParam("id", $id, PDO::PARAM_INT);
@@ -127,14 +141,43 @@
         }
     }
 
-    public function countProduct( ) {
+    public function totalPrice() {
         try {  
-            $sql = "SELECT SUM(amount) FROM CART ";
+            $sql = "SELECT SUM(newPrice * amount)
+                    FROM cart
+                    LEFT JOIN product ON cart.product_id = product.id;";
             $stmt = $this->__conn->prepare($sql);
             
             $stmt->execute();
             $row = $stmt->fetchColumn();
             return $row;
+        } catch(Exception $e) {
+            echo $e->getMessage();
+            exit();
+        }
+    }
+
+    public function totalQuantity(){
+        try {  
+            $sql = "select sum(amount) from cart";
+            $stmt = $this->__conn->prepare($sql);
+            
+            $stmt->execute();
+            $row = $stmt->fetchColumn();
+            return $row;
+        } catch(Exception $e) {
+            echo $e->getMessage();
+            exit();
+        }
+    }
+
+    public function checkAmountOfCart(){
+        try {  
+            $sql = "delete from cart where amount = 0 ";
+            $stmt = $this->__conn->prepare($sql);
+            
+            $stmt->execute();
+            
         } catch(Exception $e) {
             echo $e->getMessage();
             exit();
