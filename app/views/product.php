@@ -24,81 +24,33 @@
         $string = explode("/",$_SERVER["PATH_INFO"]);
         $name = $string[2];
         ?>
+        <div class="tab__btns">
+        <?php $listCategory = $data["listCategory"]; ?>
+        <a class="tab__btn <?php echo isset($_SERVER["PATH_INFO"]) && $name == "All"? "active-tab":""; ?>" href="http://localhost/examfinal/product/All" >All</a>
+        <?php foreach ($listCategory as $key => $value) : ?>
+            <a class="tab__btn <?php echo isset($_SERVER["PATH_INFO"]) && $name == $value->category? "active-tab":""; ?>" href="http://localhost/examfinal/product/<?php echo $value->category?>" ><?php echo ucfirst($value->category)?></a>
+    
+        <?php endforeach; ?>
+        </div>
         <form action="http://localhost/examfinal/product/<?php echo $name?>" id="frm" method="GET">
 
             <select name="cake" id="cake" onchange="onSelectChange();">
-                <option value="content-asc" <?php echo isset($_GET["cake"]) && $_GET["cake"]=="content-asc"? "selected" : "";?>>Ten: A-Z</option>
-                <option value="content-desc" <?php echo isset($_GET["cake"]) && $_GET["cake"]=="content-desc"? "selected" : "";?>>Ten: Z-A</option>
-                <option value="newPrice-asc" <?php echo isset($_GET["cake"]) && $_GET["cake"]=="newPrice-asc"? "selected" : "";?>>Gia: tang dan</option>
-                <option value="newPrice-desc" <?php echo isset($_GET["cake"]) && $_GET["cake"]=="newPrice-desc"? "selected" : "";?>>Gia: giam dan</option>
+                <option value="content-asc" <?php echo isset($_GET["cake"]) && $_GET["cake"]=="content-asc"? "selected" : "";?>>Name: A-Z</option>
+                <option value="content-desc" <?php echo isset($_GET["cake"]) && $_GET["cake"]=="content-desc"? "selected" : "";?>>Name: Z-A</option>
+                <option value="newPrice-asc" <?php echo isset($_GET["cake"]) && $_GET["cake"]=="newPrice-asc"? "selected" : "";?>>Price: ASC</option>
+                <option value="newPrice-desc" <?php echo isset($_GET["cake"]) && $_GET["cake"]=="newPrice-desc"? "selected" : "";?>>Price: DESC</option>
                 <option value="status-newest" <?php echo isset($_GET["cake"]) && $_GET["cake"]=="status-newest"? "selected" : "";?>>Newest</option>
                 <option value="status-oldest" <?php echo isset($_GET["cake"]) && $_GET["cake"]=="status-oldest"? "selected" : "";?>>Oldest</option>
                 <!-- <option value="mostSell" <?php echo isset($_GET["cake"]) && $_GET["cake"]=="mostSell"? "selected" : "";?>>Ban chay</option> -->
             </select>
             <script>function onSelectChange(){
-            document.getElementById('frm').submit();
-                }           
+                document.getElementById('frm').submit();
+            }           
             </script>
         </form>
                 
     </section>
-    <!--=======Header=========-->
-    <!--=======HOME=========-->
-    <!--=============== CATEGORIES ===============-->
-    <!-- <section class="categories container section">
-        <h3 class="section__title">Choose Your Category</h3>
 
-    <div class="categories__container swiper">
-        <div class="swiper-wrapper">
-            <a href="" class="category__item swiper-slide">
-                <img src="https://bakerybitz.com/cdn/shop/files/438C64B7-3202-4C35-999A-81B3B93F1D55.jpg?v=1691524552&width=360" alt=""  class="category__img">
-
-                <h3 class="category__title">CAKE</h3>
-            </a>
-            <a href="" class="category__item swiper-slide">
-                <img src="https://bakerybitz.com/cdn/shop/files/438C64B7-3202-4C35-999A-81B3B93F1D55.jpg?v=1691524552&width=360" alt=""  class="category__img">
-
-                <h3 class="category__title">PASTRIES</h3>
-            </a>
-            <a href="" class="category__item swiper-slide">
-                <img src="https://bakerybitz.com/cdn/shop/files/438C64B7-3202-4C35-999A-81B3B93F1D55.jpg?v=1691524552&width=360" alt=""  class="category__img">
-
-                <h3 class="category__title">COOKIES</h3>
-            </a>
-            <a href="" class="category__item swiper-slide">
-                <img src="https://bakerybitz.com/cdn/shop/files/438C64B7-3202-4C35-999A-81B3B93F1D55.jpg?v=1691524552&width=360" alt=""  class="category__img">
-
-                <h3 class="category__title">DRINKS</h3>
-            </a>
-            <a href="" class="category__item swiper-slide">
-              <img src="https://bakerybitz.com/cdn/shop/files/438C64B7-3202-4C35-999A-81B3B93F1D55.jpg?v=1691524552&width=360" alt=""  class="category__img">
-
-              <h3 class="category__title">BÁNH MỲ KẸP THỊT</h3>
-          </a>
-          <a href="" class="category__item swiper-slide">
-            <img src="https://bakerybitz.com/cdn/shop/files/438C64B7-3202-4C35-999A-81B3B93F1D55.jpg?v=1691524552&width=360" alt=""  class="category__img">
-
-            <h3 class="category__title">DONUT</h3>
-        </a>
-        <a href="" class="category__item swiper-slide">
-          <img src="https://bakerybitz.com/cdn/shop/files/438C64B7-3202-4C35-999A-81B3B93F1D55.jpg?v=1691524552&width=360p" alt=""  class="category__img">
-
-          <h3 class="category__title">BAG</h3>
-      </a>
-
-        
-        </div>
-
-        <div class="swiper-button-next">
-            <i class="fa-solid fa-angle-right"></i>
-        </div>
-        
-        <div class="swiper-button-prev">
-            <i class="fa-solid fa-angle-left"></i>
-        </div>
-        
-    </div>
-    </section> -->
     <!--=======PRODUCTS=========-->
             <?php 
                 if(isset($_SERVER["PATH_INFO"])){
@@ -110,7 +62,24 @@
 
                 }
             ?>
-        <!-- Modal -->
+        <!-- Alert Modal -->
+        <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title fs-5" id="alertModalLabel"></div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="http://localhost/examfinal/user/login" class="btn btn-primary <?php echo isset($_SESSION["user"])?"disable":"";?>">Login</a>
+            </div>
+            </div>
+        </div>
+        </div>    
+
+        <!-- Product Modal -->
         <div class="modal fade " id="insertData" tabindex="-1" aria-labelledby="insertDataLabel" aria-hidden="true">
         <div class="modal-dialog fixed-top">
             <div class="modal-content">
@@ -136,20 +105,13 @@
         </div>
         </div>
     <section class="products section container">
-        <div class="tab__btns">
-            <a class="tab__btn <?php echo isset($_SERVER["PATH_INFO"]) && $name == "All"? "active-tab":""; ?>" href="http://localhost/examfinal/product/All" >All</a>
-            <a class="tab__btn <?php echo isset($_SERVER["PATH_INFO"]) && $name == "cake"? "active-tab":""; ?>" href="http://localhost/examfinal/product/cake" >Cakes</a>
-            <a class="tab__btn <?php echo isset($_SERVER["PATH_INFO"]) && $name == "pastries"? "active-tab":""; ?>" href="http://localhost/examfinal/product/pastries" >Pastries</a>
-            <a class="tab__btn <?php echo isset($_SERVER["PATH_INFO"]) && $name == "cookies"? "active-tab":""; ?>" href="http://localhost/examfinal/product/cookies" >Cookies</a>
-            <a class="tab__btn <?php echo isset($_SERVER["PATH_INFO"]) && $name == "pies"? "active-tab":""; ?>" href="http://localhost/examfinal/product/pies" >Pies</a>
-            <a class="tab__btn <?php echo isset($_SERVER["PATH_INFO"]) && $name == "merchandise"? "active-tab":""; ?>" href="http://localhost/examfinal/product/merchandise" >Merchandise</a>
-
-        </div>
         <div class="tab__items">
             <div class="tab__item active-tab" content id="featured">
                 <div class="product__container grid">
                     <!-- /*list product*/ -->
-                    <?php $listProduct = $data["listProduct"]; ?>
+                    <?php $listProduct = $data["listProduct"]; 
+                        
+                    ?>
                     <?php foreach ($listProduct as $key => $value) : ?>
                         <div class="product__item">
                             <div class="product__banner">
@@ -217,290 +179,10 @@
             </div>
         </section>
 
-    <!--=======DEAL=========-->
-    <!-- <section class="deals section">
-        <div class="deals__container container grid">
-            <div class="deals__item">
-                <div class="deals__group">
-                    <h3 class="deals__brand">Deal of the day</h3>
-                    <span class="deals__category">Limited</span>
-                </div>
-
-                <h4 class="deals__title">Best cake of the day</h4>
-
-                <div class="deals__price flex">
-                    <span class="new__price">$149</span>
-                    <span class="old__price">$200</span>
-                </div>
-
-                <div class="deals__group">
-                    <p class="deals__countdown-text">Hurry Up! Offer End In:</p>
-                    <div class="countdown">
-                        <div class="countdown__amount">
-                            <p class="countdown__period" id="days">0</p>
-                            <span class="unit">Days</span>
-                        </div>
-                        <div class="countdown__amount">
-                            <p class="countdown__period" id="hours">0</p>
-                            <span class="unit">Hours</span>
-                        </div>
-                        <div class="countdown__amount">
-                            <p class="countdown__period" id="mins">0</p>
-                            <span class="unit">Mins</span>
-                        </div>
-                        <div class="countdown__amount-last">
-                            <p class="countdown__period" id="sec">0</p>
-                            <span class="unit">Sec</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="deals__btn">
-                    <a href="" class="btn btn--md">Shop Now</a>
-                </div>
-            </div>
-
-            <div class="deals__item">
-                <div class="deals__group">
-                    <h3 class="deals__brand">Deal of the day</h3>
-                    <span class="deals__category">Limited</span>
-                </div>
-
-                <h4 class="deals__title">Best cake of the day</h4>
-
-                <div class="deals__price flex">
-                    <span class="new__price">$149</span>
-                    <span class="old__price">$200</span>
-                </div>
-
-                <div class="deals__group">
-                    <p class="deals__countdown-text">Hurry Up! Offer End In:</p>
-                    <div class="countdown">
-                        <div class="countdown__amount">
-                            <p class="countdown__period" id="days1">0</p>
-                            <span class="unit">Days</span>
-                        </div>
-                        <div class="countdown__amount">
-                            <p class="countdown__period" id="hours1">0</p>
-                            <span class="unit">Hours</span>
-                        </div>
-                        <div class="countdown__amount">
-                            <p class="countdown__period" id="mins1">0</p>
-                            <span class="unit">Mins</span>
-                        </div>
-                        <div class="countdown__amount-last">
-                            <p class="countdown__period" id="sec1">0</p>
-                            <span class="unit">Sec</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="deals__btn">
-                    <a href="" class="btn btn--md">Shop Now</a>
-                </div>
-            </div>
-        </div>
-    </section> -->
    
-    <!--=======SHOWCASE=========-->
-    <!-- <section class="showcase section">
-        <div class="showcase__container container grid">
-            <div class="showcase__wrapper">
-                <h3 class="section__title">Hot release</h3>
-                    <div class="showcase__item">
-                        <a href="" class="showcase__img-box">
-                            <img src="https://bakerz-bite.vercel.app/assets/WalnutCake.d44a1984.png" alt="" class="showcase__img">
-                        </a>
-                        <div class="showcase__content">
-                            <a href="">
-                                <h4 class="showcase__title">Cake</h4>
-                            </a>
-
-                            <div class="showcase__price flex">
-                                <span class="new__price">$234</span>
-                                <span class="old__price">$237</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="showcase__item">
-                        <a href="" class="showcase__img-box">
-                            <img src="https://bakerz-bite.vercel.app/assets/WalnutCake.d44a1984.png" alt="" class="showcase__img">
-                        </a>
-                        <div class="showcase__content">
-                            <a href="">
-                                <h4 class="showcase__title">Cake</h4>
-                            </a>
-
-                            <div class="showcase__price flex">
-                                <span class="new__price">$234</span>
-                                <span class="old__price">$237</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="showcase__item">
-                        <a href="" class="showcase__img-box">
-                            <img src="https://bakerz-bite.vercel.app/assets/WalnutCake.d44a1984.png" alt="" class="showcase__img">
-                        </a>
-                        <div class="showcase__content">
-                            <a href="">
-                                <h4 class="showcase__title">Cake</h4>
-                            </a>
-
-                            <div class="showcase__price flex">
-                                <span class="new__price">$234</span>
-                                <span class="old__price">$237</span>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-
-            <div class="showcase__wrapper">
-                <h3 class="section__title">Deal</h3>
-                    <div class="showcase__item">
-                        <a href="" class="showcase__img-box">
-                            <img src="https://bakerz-bite.vercel.app/assets/WalnutCake.d44a1984.png" alt="" class="showcase__img">
-                        </a>
-                        <div class="showcase__content">
-                            <a href="">
-                                <h4 class="showcase__title">Cake</h4>
-                            </a>
-
-                            <div class="showcase__price flex">
-                                <span class="new__price">$234</span>
-                                <span class="old__price">$237</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="showcase__item">
-                        <a href="" class="showcase__img-box">
-                            <img src="https://bakerz-bite.vercel.app/assets/WalnutCake.d44a1984.png" alt="" class="showcase__img">
-                        </a>
-                        <div class="showcase__content">
-                            <a href="">
-                                <h4 class="showcase__title">Cake</h4>
-                            </a>
-
-                            <div class="showcase__price flex">
-                                <span class="new__price">$234</span>
-                                <span class="old__price">$237</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="showcase__item">
-                        <a href="" class="showcase__img-box">
-                            <img src="https://bakerz-bite.vercel.app/assets/WalnutCake.d44a1984.png" alt="" class="showcase__img">
-                        </a>
-                        <div class="showcase__content">
-                            <a href="">
-                                <h4 class="showcase__title">Cake</h4>
-                            </a>
-
-                            <div class="showcase__price flex">
-                                <span class="new__price">$234</span>
-                                <span class="old__price">$237</span>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-
-            <div class="showcase__wrapper">
-                <h3 class="section__title">Top Selling</h3>
-                    <div class="showcase__item">
-                        <a href="" class="showcase__img-box">
-                            <img src="https://bakerz-bite.vercel.app/assets/WalnutCake.d44a1984.png" alt="" class="showcase__img">
-                        </a>
-                        <div class="showcase__content">
-                            <a href="">
-                                <h4 class="showcase__title">Cake</h4>
-                            </a>
-
-                            <div class="showcase__price flex">
-                                <span class="new__price">$234</span>
-                                <span class="old__price">$237</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="showcase__item">
-                        <a href="" class="showcase__img-box">
-                            <img src="https://bakerz-bite.vercel.app/assets/WalnutCake.d44a1984.png" alt="" class="showcase__img">
-                        </a>
-                        <div class="showcase__content">
-                            <a href="">
-                                <h4 class="showcase__title">Cake</h4>
-                            </a>
-
-                            <div class="showcase__price flex">
-                                <span class="new__price">$234</span>
-                                <span class="old__price">$237</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="showcase__item">
-                        <a href="" class="showcase__img-box">
-                            <img src="https://bakerz-bite.vercel.app/assets/WalnutCake.d44a1984.png" alt="" class="showcase__img">
-                        </a>
-                        <div class="showcase__content">
-                            <a href="">
-                                <h4 class="showcase__title">Cake</h4>
-                            </a>
-
-                            <div class="showcase__price flex">
-                                <span class="new__price">$234</span>
-                                <span class="old__price">$237</span>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-
-            <div class="showcase__wrapper">
-                <h3 class="section__title">Trendy</h3>
-                    <div class="showcase__item">
-                        <a href="" class="showcase__img-box">
-                            <img src="https://bakerz-bite.vercel.app/assets/WalnutCake.d44a1984.png" alt="" class="showcase__img">
-                        </a>
-                        <div class="showcase__content">
-                            <a href="">
-                                <h4 class="showcase__title">Cake</h4>
-                            </a>
-
-                            <div class="showcase__price flex">
-                                <span class="new__price">$234</span>
-                                <span class="old__price">$237</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="showcase__item">
-                        <a href="" class="showcase__img-box">
-                            <img src="https://bakerz-bite.vercel.app/assets/WalnutCake.d44a1984.png" alt="" class="showcase__img">
-                        </a>
-                        <div class="showcase__content">
-                            <a href="">
-                                <h4 class="showcase__title">Cake</h4>
-                            </a>
-
-                            <div class="showcase__price flex">
-                                <span class="new__price">$234</span>
-                                <span class="old__price">$237</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="showcase__item">
-                        <a href="" class="showcase__img-box">
-                            <img src="https://bakerz-bite.vercel.app/assets/WalnutCake.d44a1984.png" alt="" class="showcase__img">
-                        </a>
-                        <div class="showcase__content">
-                            <a href="">
-                                <h4 class="showcase__title">Cake</h4>
-                            </a>
-
-                            <div class="showcase__price flex">
-                                <span class="new__price">$234</span>
-                                <span class="old__price">$237</span>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-        </div> -->
+   
+   
+        
     </section>
     <script>
         const swiper = new Swiper('.swiper', {
@@ -604,10 +286,11 @@
           pcategory: pcategory
         },
         success: function(response) {
-          alert(response);
-          
+          $('#alertModal').modal('show');
+          $('#alertModalLabel').html(response);
+
           load_cart_item_number();
-          $('#insertData').modal('hide')
+          $('#insertData').modal('hide');
         }
       });
     });
@@ -623,6 +306,7 @@
             cartItem: "cart_item"
         },
         success: function(response) {
+          
           $("#cart-item").html(response);
         }
       });

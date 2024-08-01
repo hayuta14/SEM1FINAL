@@ -617,3 +617,9 @@ a{
     width: 420px;
     margin-left: 31px;
 }
+/*SORT*/
+.sort{
+    justify-content: space-between;
+    display: flex;
+    padding-bottom: 0px;
+}

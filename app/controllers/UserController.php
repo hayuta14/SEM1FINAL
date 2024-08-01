@@ -6,6 +6,7 @@ class UserController  extends BaseController {
     }
 
     public function login() {
+        
         if(isset($_POST["username"]) && isset($_POST["password"])) {
             $username = $_POST["username"];
             $password = $_POST["password"];
@@ -16,6 +17,7 @@ class UserController  extends BaseController {
                 if($user["role"] == "admin") {
                     header("Location: http://localhost/examfinal/home/index");
                 } else {
+                    
                     header("Location: http://localhost/examfinal/home/index");
                 }
             } else {

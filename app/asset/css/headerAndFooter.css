@@ -185,7 +185,7 @@ nav img{
 /* cart */
 
 .disable{
-    display: inline;
+    display: none;
 }
 
 @media (max-width:1690px){

@@ -11,12 +11,23 @@ class CartController extends BaseController {
     }
 
     public function index() {
-        $quantity = $this->__ProductModel->totalQuantity();
-        $total_price = $this->__ProductModel->totalPrice();
-        $this->__ProductModel->checkAmountOfCart();
-        $listProduct =  $this->__ProductModel->listProductOfCart();
-        
-        $this->view("layouts/client_layout", ["content"=>"cart", "listProduct"=>$listProduct, "quantity"=>$quantity, "total_price"=>$total_price]);
+        if(isset($_SESSION["user"])){
+
+            $user_id=$_SESSION["user"]["id"];
+            $quantity = $this->__ProductModel->totalQuantity($user_id);
+            $total_price = $this->__ProductModel->totalPrice($user_id);
+            $this->__ProductModel->checkAmountOfCart();
+            $listProduct =  $this->__ProductModel->listProductOfCart($user_id);
+            
+            $this->view("layouts/client_layout", ["content"=>"cart", "listProduct"=>$listProduct, "quantity"=>$quantity, "total_price"=>$total_price]);
+        } else {
+            $quantity = $this->__ProductModel->totalQuantity();
+            $total_price = $this->__ProductModel->totalPrice();
+            $this->__ProductModel->checkAmountOfCart();
+            $listProduct =  $this->__ProductModel->listProductOfCart();
+            
+            $this->view("layouts/client_layout", ["content"=>"cart", "listProduct"=>$listProduct, "quantity"=>$quantity, "total_price"=>$total_price]);
+        }
     }
     
     

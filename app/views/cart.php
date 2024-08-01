@@ -16,7 +16,7 @@
         <div class="returnCart">
             <a href="http://localhost/examfinal/product/All">keep shopping</a>
             <h1>List Product in Cart</h1>
-            <div class="list">
+            <div class="list scroll">
             <?php 
             $listProduct = $data["listProduct"];
             if(isset($data["quantity"])){
@@ -34,20 +34,22 @@
                 $total_price = 0;
             }
             ?>
-            
+           
             <?php foreach ($listProduct as $key => $value) : ?>
-                <div class="item">
+                <div class="item ">
                     <img src="<?php echo $value->img1?>">
                     <div class="info">
                         <div class="name"><?php echo $value->content?></div>
-                        <div class="price"><?php echo $value->newPrice?></div>
+                        <div class="price"><?php echo $value->newPrice?>$/product</div>
                     </div>
                     <div class="checkout_icon"> 
-                        <a href="http://localhost/examfinal/product/minusProduct?id=<?php echo $value->product_id?>"><i class="fa-solid fa-minus"></i></a>
-                        <?php echo $value->amount?>                
-                        <a href="http://localhost/examfinal/product/plusProduct?id=<?php echo $value->product_id?>"><i class="fa-solid fa-plus"></i></a>
+                        <span class="disable id"><?php echo $value->product_id?></span>
+                        <span class="disable value"><?php echo $value->newPrice?></span>
+                        <button class="minus"><i class="fa-solid fa-minus"></i></button>
+                        <span id="<?php echo $value->product_id?>"><?php echo $value->amount?></span>              
+                        <button class="plus" ><i class="fa-solid fa-plus"></i></button>
                     </div>
-                    <div class="returnPrice"><?php echo $value->amount*$value->newPrice?></div>
+                    <div class="<?php echo $value->product_id?>price"><?php echo $value->amount*$value->newPrice?>$</div>
                 </div>
             <?php endforeach; ?>
             </div>
@@ -109,5 +111,150 @@
 </div>
 
 </body>
+<script>
+    $(document).ready(function(){
+        
+            $('.plus').click(function(e){
+                e.preventDefault();
+                var value = $(this).closest('.item').find('.value').text();
+                var user_id = $(this).closest('.item').find('.id').text();
+                $.ajax({
+                    method: "POST",
+                    url: "http://localhost/examfinal/product/plusProduct",
+                    data: {
+                        'plus': true,
+                        'id':user_id,
+                    },
+                    dataType: "",
+                    success: function (response){
+                        load_total_price();
+                        load_total_quantity();
+                        load_price_on_id(user_id,value);
+                        load_quantity(user_id);
+                        
+                    }   
+                })
+            });
+        });
 
+        $(document).ready(function(){
+            $('.minus').click(function(e){
+                e.preventDefault();
+                var value = $(this).closest('.item').find('.value').text();
+                var user_id = $(this).closest('.item').find('.id').text();
+                $.ajax({
+                    method: "POST",
+                    url: "http://localhost/examfinal/product/minusProduct",
+                    data: {
+                        'minus': true,
+                        'id':user_id,
+                    },
+                    dataType: "",
+                    success: function (response){
+                        load_total_price();
+                        load_total_quantity();
+                        load_price_on_id(user_id,value);
+                        load_quantity(user_id);
+                        
+                    }   
+                })
+            });
+        });
+        
+        function load_quantity(user_id) {
+            
+            let text = "#".concat(user_id)
+            console.log(text);
+            $.ajax({
+                url: 'http://localhost/examfinal/product/load_cart_item_number',
+                method: 'get',
+                data: {
+                    quantity: "quantity",
+                    'id': user_id
+                },
+                success: function(response) {
+                if(response==0){
+                    
+                    
+                        location.reload();
+                    
+                } else {
+
+                    $(text).html(response);
+                }
+                }
+            });
+            }
+            
+            function load_price_on_id(user_id,value) {
+            
+            let text = ".".concat(user_id,"price");
+            console.log(text);
+            $.ajax({
+                url: 'http://localhost/examfinal/product/load_cart_item_number',
+                method: 'get',
+                data: {
+                    price: "price",
+                    'id': user_id,
+                    'value': value
+                },
+                success: function(response) {
+                
+                $(text).html(response);
+                }
+            });
+            }
+
+            function load_total_quantity() {
+            
+            $.ajax({
+                url: 'http://localhost/examfinal/product/load_cart_item_number',
+                method: 'get',
+                data: {
+                    totalQuantity: "totalQuantity"
+                    
+                    
+                },
+                success: function(response) {
+                
+                $(".totalQuantity").html(response);
+                }
+            });
+            }
+
+            function load_total_price() {
+            
+            $.ajax({
+                url: 'http://localhost/examfinal/product/load_cart_item_number',
+                method: 'get',
+                data: {
+                    totalPrice: "totalPrice"
+                    
+                    
+                },
+                success: function(response) {
+                
+                $(".totalPrice").html("$".concat(response));
+                }
+            });
+            }
+
+            function delete_item() {
+            
+            $.ajax({
+                url: 'http://localhost/examfinal/product/load_cart_item_number',
+                method: 'get',
+                data: {
+                    deleteItem: "deleteItem"
+                    
+                    
+                },
+                success: function(response) {
+                
+                
+                }
+            });
+            }
+
+</script>
 </html>

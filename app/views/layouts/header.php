@@ -10,9 +10,9 @@
                 <ul>
                     <li><a href="http://localhost/examfinal/home/index">HOME</a></li>
                     <li><a href="http://localhost/examfinal/product/All">PRODUCTS</a></li>
-                    <li><a href="">GALLERY</a></li>
-                    <li><a href="">ABOUT US</a></li>
-                    <li><a href="">CONTACT US</a></li>
+                    <li><a href="http://localhost/examfinal/app/views/gallery.php">GALLERY</a></li>
+                    <li><a href="http://localhost/examfinal/app/views/about.php">ABOUT US</a></li>
+                    <li><a href="http://localhost/examfinal/app/views/contact.php">CONTACT US</a></li>
                     <li class="login__layout">
                         
                         <?php if(isset($_SESSION["user"])): ?>
