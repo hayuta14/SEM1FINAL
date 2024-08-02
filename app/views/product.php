@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <title>Products</title>
     <!--=======CSS=========-->
-    <link rel="stylesheet" href="http://localhost/examfinal/app/asset/css/headerAndFooter.css">
+    <link rel="stylesheet" href="http://localhost/examfinal/app/asset/css/header.css">
     <!--=======SWIPER CSS=========-->
     <link
         rel="stylesheet"
@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="http://localhost/examfinal/app/asset/css/product.css">
 </head>
 <body>
+    
     <section class="sort section container">
         <?php 
         $string = explode("/",$_SERVER["PATH_INFO"]);
@@ -116,6 +117,7 @@
                         <div class="product__item">
                             <div class="product__banner">
                                 <span class="disable user_id"><?php echo $value->id?></span>
+                                <span class="disable describes"><?php echo $value->describes?></span>
                                 <button type="button" class="product__image view-data" data-bs-toggle="modal" data-bs-target="#insertData">
                                     
                                     <img src="<?php echo $value->img1?>" class="product__img default" alt="">
@@ -124,14 +126,14 @@
 
                             
 
-                            <div class="product__badge light-pink"><?php echo $value->status?></div>
+                            <div class="product__badge light-pink <?php echo empty($value->status)? "disable":""?>"><?php echo $value->status?></div>
                         </div>
 
                         <div class="product__content">
                             <span class="product__category"><?php echo $value->category?></span>
-                            <a href="">
+                            
                                 <h3 class="product__title"><?php echo $value->content?></h3>
-                            </a>
+                            
                             <div class="product__rating">
                             
                                 <i class="fa-regular fa-star"></i>

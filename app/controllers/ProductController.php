@@ -60,6 +60,7 @@ class ProductController extends BaseController {
                     $price       = $data->newPrice;
                     $img       = $data->img1;
                     $img2       = $data->img2;
+                    $describes = $data->describes;
                     echo'
                         
                         <div class="modal-header">
@@ -74,18 +75,19 @@ class ProductController extends BaseController {
                             <!-- Additional required wrapper -->
                             <div class="swiper-wrapper">
                                 <!-- Slides -->
-                                <div class="swiper-slide"><img class="img_detail" src="'.$img.'" alt=""></div>  
-                            </div>
-                                 <div class="product__rating">
-                            
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
+                                <div><img class="img_detail" src="'.$img.'" alt=""></div>  
                             </div>
                             </div>
-                            <div>Price: '.$price.'$</div>
+                            <div class="modal_price">Price: '.$price.'$</div>
+                            <div class="product__rating-modal">
+                                
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                            </div>
+                            <div class="modal_describes">Description:'.$describes.'</div>
                         </div>
                       
                            
@@ -201,9 +203,9 @@ class ProductController extends BaseController {
     public function All(){
         $_SERVER["PATH_INFO"];
         $string = explode("/",$_SERVER["PATH_INFO"]);
-        $name= $string[2];
-        if($name =="All"){
-            $name = "product";
+        $name= "category.category"."="."'".$string[2]."'";
+        if($string[2] =="All"){
+            $name = 1;
         }
         $page="0";
         if(isset($_GET["page"])){
@@ -216,49 +218,50 @@ class ProductController extends BaseController {
         if(isset($_GET["cake"])){
             $cut = explode("-",$_GET["cake"]);
             $content=$cut[0];
-            $action=$cut[1];
+            $action="status="."'".$cut[1]."'";
             if($_GET["cake"]=="content-desc"){
                 //gap of table
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
-                $numberOfPage=$this->__ProductModel->numOfPage();
+                $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else if($_GET["cake"]=="newPrice-asc"){
-                
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
-                $numberOfPage=$this->__ProductModel->numOfPage();
+                $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else if($_GET["cake"]=="newPrice-desc"){
-                
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
-                $numberOfPage=$this->__ProductModel->numOfPage();
+                $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else if($_GET["cake"]=="status-newest"){
                 
                 $listProduct=$this->__ProductModel->newOrOld($name,$content,$action,$page);
-                $numberOfPage=$this->__ProductModel->numOfPage($action);
+                $numberOfPage=$this->__ProductModel->numOfPage($name,$action);
                 $listCategory=$this->__ProductModel->listCategory();
                 $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else if($_GET["cake"]=="status-oldest"){
                 
                 $listProduct=$this->__ProductModel->newOrOld($name,$content,$action,$page);
                 
-                $numberOfPage=$this->__ProductModel->numOfPage($action);
+                $numberOfPage=$this->__ProductModel->numOfPage($name,$action);
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else {
                 
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
-                $numberOfPage=$this->__ProductModel->numOfPage();
+                $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             }
         } else{    
             $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
             
-            $numberOfPage=$this->__ProductModel->numOfPage();
+            $numberOfPage=$this->__ProductModel->numOfPage($name);
             $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             }
@@ -267,7 +270,7 @@ class ProductController extends BaseController {
     public function cakes(){
         $_SERVER["PATH_INFO"];
         $string = explode("/",$_SERVER["PATH_INFO"]);
-        $name= $string[2];
+        $name= "category.category"."="."'".$string[2]."'";
         if($name =="All"){
             $name = "product";
         }
@@ -282,24 +285,25 @@ class ProductController extends BaseController {
         if(isset($_GET["cake"])){
             $cut = explode("-",$_GET["cake"]);
             $content=$cut[0];
-            $action=$cut[1];
-            $where=$content."="."'".$action."'";
+            $action="status="."'".$cut[1]."'";
+            $where=$action;
             
             if($_GET["cake"]=="content-desc"){
                 //gap of table
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else if($_GET["cake"]=="newPrice-asc"){
-                
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else if($_GET["cake"]=="newPrice-desc"){
-                
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
@@ -338,7 +342,7 @@ class ProductController extends BaseController {
     public function pastries(){
         $_SERVER["PATH_INFO"];
         $string = explode("/",$_SERVER["PATH_INFO"]);
-        $name= $string[2];
+        $name= "category.category"."="."'".$string[2]."'";
         if($name =="All"){
             $name = "product";
         }
@@ -353,24 +357,25 @@ class ProductController extends BaseController {
         if(isset($_GET["cake"])){
             $cut = explode("-",$_GET["cake"]);
             $content=$cut[0];
-            $action=$cut[1];
-            $where=$content."="."'".$action."'";
+            $action="status="."'".$cut[1]."'";
+            $where=$action;
             
             if($_GET["cake"]=="content-desc"){
                 //gap of table
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else if($_GET["cake"]=="newPrice-asc"){
-                
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else if($_GET["cake"]=="newPrice-desc"){
-                
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
@@ -405,11 +410,11 @@ class ProductController extends BaseController {
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             }
     }
-    
+
     public function cookies(){
         $_SERVER["PATH_INFO"];
         $string = explode("/",$_SERVER["PATH_INFO"]);
-        $name= $string[2];
+        $name= "category.category"."="."'".$string[2]."'";
         if($name =="All"){
             $name = "product";
         }
@@ -424,24 +429,25 @@ class ProductController extends BaseController {
         if(isset($_GET["cake"])){
             $cut = explode("-",$_GET["cake"]);
             $content=$cut[0];
-            $action=$cut[1];
-            $where=$content."="."'".$action."'";
+            $action="status="."'".$cut[1]."'";
+            $where=$action;
             
             if($_GET["cake"]=="content-desc"){
                 //gap of table
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else if($_GET["cake"]=="newPrice-asc"){
-                
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else if($_GET["cake"]=="newPrice-desc"){
-                
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
@@ -473,7 +479,6 @@ class ProductController extends BaseController {
             
             $numberOfPage=$this->__ProductModel->numOfPage($name);
             $listCategory=$this->__ProductModel->listCategory();
-            
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             }
     }
@@ -481,7 +486,7 @@ class ProductController extends BaseController {
     public function pies(){
         $_SERVER["PATH_INFO"];
         $string = explode("/",$_SERVER["PATH_INFO"]);
-        $name= $string[2];
+        $name= "category.category"."="."'".$string[2]."'";
         if($name =="All"){
             $name = "product";
         }
@@ -496,24 +501,169 @@ class ProductController extends BaseController {
         if(isset($_GET["cake"])){
             $cut = explode("-",$_GET["cake"]);
             $content=$cut[0];
-            $action=$cut[1];
-            $where=$content."="."'".$action."'";
+            $action="status="."'".$cut[1]."'";
+            $where=$action;
             
             if($_GET["cake"]=="content-desc"){
                 //gap of table
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else if($_GET["cake"]=="newPrice-asc"){
-                
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else if($_GET["cake"]=="newPrice-desc"){
+                $action=$cut[1];
+                $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
+                $numberOfPage=$this->__ProductModel->numOfPage($name);
+                $listCategory=$this->__ProductModel->listCategory();
+            $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
+            } else if($_GET["cake"]=="status-newest"){
                 
+                $listProduct=$this->__ProductModel->newOrOld($name,$content,$action,$page);
+                $numberOfPage=$this->__ProductModel->numOfPage($name,$where);
+                $listCategory=$this->__ProductModel->listCategory();
+                
+                
+                $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
+            } else if($_GET["cake"]=="status-oldest"){
+                
+                $listProduct=$this->__ProductModel->newOrOld($name,$content,$action,$page);
+                
+                $numberOfPage=$this->__ProductModel->numOfPage($name,$where);
+                $listCategory=$this->__ProductModel->listCategory();
+            $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
+            } else {
+                
+                $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
+                $numberOfPage=$this->__ProductModel->numOfPage($name);
+                $listCategory=$this->__ProductModel->listCategory();
+            $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
+            }
+        } else{    
+            $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
+            
+            $numberOfPage=$this->__ProductModel->numOfPage($name);
+            $listCategory=$this->__ProductModel->listCategory();
+            $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
+            }
+    }
+
+    public function merchandise(){
+        $_SERVER["PATH_INFO"];
+        $string = explode("/",$_SERVER["PATH_INFO"]);
+        $name= "category.category"."="."'".$string[2]."'";
+        if($name =="All"){
+            $name = "product";
+        }
+        $page="0";
+        if(isset($_GET["page"])){
+
+            $page = $_GET["page"];
+            $page = ($page-1)*12;
+        }
+        $content="content";
+        $action="ASC";
+        if(isset($_GET["cake"])){
+            $cut = explode("-",$_GET["cake"]);
+            $content=$cut[0];
+            $action="status="."'".$cut[1]."'";
+            $where=$action;
+            
+            if($_GET["cake"]=="content-desc"){
+                //gap of table
+                $action=$cut[1];
+                $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
+                
+                $numberOfPage=$this->__ProductModel->numOfPage($name);
+                $listCategory=$this->__ProductModel->listCategory();
+            $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
+            } else if($_GET["cake"]=="newPrice-asc"){
+                $action=$cut[1];
+                $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
+                $numberOfPage=$this->__ProductModel->numOfPage($name);
+                $listCategory=$this->__ProductModel->listCategory();
+            $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
+            } else if($_GET["cake"]=="newPrice-desc"){
+                $action=$cut[1];
+                $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
+                $numberOfPage=$this->__ProductModel->numOfPage($name);
+                $listCategory=$this->__ProductModel->listCategory();
+            $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
+            } else if($_GET["cake"]=="status-newest"){
+                
+                $listProduct=$this->__ProductModel->newOrOld($name,$content,$action,$page);
+                $numberOfPage=$this->__ProductModel->numOfPage($name,$where);
+                $listCategory=$this->__ProductModel->listCategory();
+                
+                
+                $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
+            } else if($_GET["cake"]=="status-oldest"){
+                
+                $listProduct=$this->__ProductModel->newOrOld($name,$content,$action,$page);
+                
+                $numberOfPage=$this->__ProductModel->numOfPage($name,$where);
+                $listCategory=$this->__ProductModel->listCategory();
+            $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
+            } else {
+                
+                $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
+                $numberOfPage=$this->__ProductModel->numOfPage($name);
+                $listCategory=$this->__ProductModel->listCategory();
+            $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
+            }
+        } else{    
+            $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
+            
+            $numberOfPage=$this->__ProductModel->numOfPage($name);
+            $listCategory=$this->__ProductModel->listCategory();
+            $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
+            }
+    }
+
+    public function drinks(){
+        $_SERVER["PATH_INFO"];
+        $string = explode("/",$_SERVER["PATH_INFO"]);
+        $name= "category.category"."="."'".$string[2]."'";
+        if($name =="All"){
+            $name = "product";
+        }
+        $page="0";
+        if(isset($_GET["page"])){
+
+            $page = $_GET["page"];
+            $page = ($page-1)*12;
+        }
+        $content="content";
+        $action="ASC";
+        if(isset($_GET["cake"])){
+            $cut = explode("-",$_GET["cake"]);
+            $content=$cut[0];
+            $action="status="."'".$cut[1]."'";
+            $where=$action;
+            
+            if($_GET["cake"]=="content-desc"){
+                //gap of table
+                $action=$cut[1];
+                $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
+                
+                $numberOfPage=$this->__ProductModel->numOfPage($name);
+                $listCategory=$this->__ProductModel->listCategory();
+            $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
+            } else if($_GET["cake"]=="newPrice-asc"){
+                $action=$cut[1];
+                $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
+                $numberOfPage=$this->__ProductModel->numOfPage($name);
+                $listCategory=$this->__ProductModel->listCategory();
+            $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
+            } else if($_GET["cake"]=="newPrice-desc"){
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();

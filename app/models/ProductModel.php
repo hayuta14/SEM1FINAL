@@ -7,9 +7,10 @@
     }
 
     
-    public function numOfPage($name="product",$from="1",$table="category"){
+    public function numOfPage($name,$table="1"){
         $row_per_page=12;
-        $sql1 ="select count(*) from $name where $from";
+        $sql1 ="select count(*) AS category from product join category on product.category=category.id where $name && $table ";
+       
         $stmt1 = $this->__conn->prepare($sql1);
         $stmt1->execute();
         $nr_of_row = $stmt1->fetchColumn();
@@ -17,21 +18,23 @@
         return $page;
     }
 
-    public function listProduct($name="product",$content="content",$order="ASC",$page="0"){
+    public function listProduct($name,$content="content",$order="ASC",$page="0"){
         
         try {
             if (isset($this->__conn)) {
                 $sql = " select 
-                    $name.id,
-                    $name.content,
-                    $name.category,
-                    $name.newPrice,
-                    $name.oldPrice,
-                    $name.img1,
-                    $name.img2,
-                    $name.status,
-                    category.category AS category from $name  join category on $name.category=category.id order by $content $order limit $page,12 ";
+                    product.id,
+                    product.content,
+                    product.category,
+                    product.newPrice,
+                    product.oldPrice,
+                    product.img1,
+                    product.img2,
+                    product.status,
+                    category.category AS category from product join category on product.category=category.id where $name order by $content $order limit $page,12 ";
+                    
                 $stmt = $this->__conn->prepare($sql);
+               
                 $stmt->execute();
                 // $sql = "select * from [cake] where category = 'cake' order by $name $order  ";
                 // $stmt = $this->__conn->prepare($sql);
@@ -45,6 +48,8 @@
             exit();
         }
     }
+
+    
     public function listCategory(){
         
         try {
@@ -52,9 +57,6 @@
                 $sql = " select * from category ; ";
                 $stmt = $this->__conn->prepare($sql);
                 $stmt->execute();
-                // $sql = "select * from [cake] where category = 'cake' order by $name $order  ";
-                // $stmt = $this->__conn->prepare($sql);
-                // $stmt->execute();
                 $result = $stmt->fetchAll(PDO::FETCH_OBJ);
                 return $result;
             }
@@ -107,10 +109,21 @@
         try {
             if (isset($this->__conn)) {
                 
-                $sql = "select * from $name where $content = '$action' limit $page,12";
+                $sql = "select
+                        product.id,
+                    product.content,
+                    product.category,
+                    product.newPrice,
+                    product.oldPrice,
+                    product.img1,
+                    product.img2,
+                    product.status,
+                    category.category AS category from product join category on product.category=category.id
+                    where $name&& product.$action limit $page,12";
+                    
+                    
                 $stmt = $this->__conn->prepare($sql);
                 $stmt->execute();  
-                
                 
                 $result = $stmt->fetchAll(PDO::FETCH_OBJ);
                 return $result;

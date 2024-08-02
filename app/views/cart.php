@@ -200,7 +200,7 @@
                 },
                 success: function(response) {
                 
-                $(text).html(response);
+                $(text).html(response.concat("$"));
                 }
             });
             }

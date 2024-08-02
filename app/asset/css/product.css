@@ -358,7 +358,19 @@ button, textarea, input {
     color: hsl(42, 100%, 50%);
     font-size: var(--smaller-font-size);
     margin-bottom: 0.75rem;
+    display: flex;
 }
+.product__rating-modal{
+    margin-left: 15px;
+    color: hsl(42, 100%, 50%);
+
+}
+
+.text-box{
+    top: 32%;
+}
+
+
 
 
 .product__price.new__price {
@@ -593,6 +605,9 @@ a{
 .table__pagination-icon{
     text-align: center;
 }
+.table__pagination-content{
+    margin-bottom: 10px;
+}
 .pagination_content,
 .pagination__icon{
     padding: 10px 10px;
@@ -615,11 +630,22 @@ a{
 .img_detail{
     height: 271px;
     width: 420px;
-    margin-left: 31px;
+    margin-left: 30px;
+    margin-bottom: 5%;
+    border-radius: 10px;
+}
+
+.modal_price{
+    margin-left: 15px;
+    font-weight: 700;
 }
 /*SORT*/
 .sort{
     justify-content: space-between;
     display: flex;
     padding-bottom: 0px;
+}
+.modal_describes{
+    margin-left: 15px;
+
 }

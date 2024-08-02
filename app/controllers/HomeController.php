@@ -1,17 +1,17 @@
 <?php 
 // controller
 class HomeController extends BaseController {
-    private $__homeModel;
+    private $__ProductModel;
     function __construct($conn)
     {
         
-        $this->__homeModel = $this->initModel("HomeModel",$conn);
+        $this->__ProductModel = $this->initModel("ProductModel",$conn);
         
     }
     //action
     public function index() {
-        
-        $this->view("layouts/client_layout", ["content"=>"home"]);
+        $listProduct =  $this->__ProductModel->listCategory();
+        $this->view("layouts/client_layout", ["content"=>"home","listProduct"=>$listProduct]);
         
     }
     //action : create ,params [$a, $b]
