@@ -1074,3 +1074,7 @@ h3{
     padding: 32px 0px;
     
 }
+
+.nav-links ul .disable{
+    display: none;
+}
