@@ -252,7 +252,7 @@ class ProductController extends BaseController {
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else {
-                
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
@@ -324,7 +324,7 @@ class ProductController extends BaseController {
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else {
-                
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
@@ -396,7 +396,7 @@ class ProductController extends BaseController {
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else {
-                
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
@@ -468,7 +468,7 @@ class ProductController extends BaseController {
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else {
-                
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
@@ -540,7 +540,7 @@ class ProductController extends BaseController {
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else {
-                
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
@@ -612,7 +612,7 @@ class ProductController extends BaseController {
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else {
-                
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();
@@ -684,7 +684,7 @@ class ProductController extends BaseController {
                 $listCategory=$this->__ProductModel->listCategory();
             $this->view("layouts/client_layout", ["content"=>"product", "listProduct"=>$listProduct, "numberOfPage"=>$numberOfPage,"listCategory"=>$listCategory]);
             } else {
-                
+                $action=$cut[1];
                 $listProduct=$this->__ProductModel->listProduct($name,$content,$action,$page);
                 $numberOfPage=$this->__ProductModel->numOfPage($name);
                 $listCategory=$this->__ProductModel->listCategory();

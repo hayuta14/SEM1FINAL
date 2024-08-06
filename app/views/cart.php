@@ -18,7 +18,13 @@
             <h1>List Product in Cart</h1>
             <div class="list scroll">
             <?php 
-            $listProduct = $data["listProduct"];
+            if(isset($data["listProduct"])){
+
+                $listProduct = $data["listProduct"];
+                  
+            } else{
+                $listProduct = [];
+            }
             if(isset($data["quantity"])){
                 $quantity = $data["quantity"];
 
@@ -60,7 +66,15 @@
         $name = $data["name"];
         
     }
-    ?>            
+    ?>    
+     <?php
+     if(isset($error[4])){
+
+         echo '<script type="text/javascript">
+                window.onload = function () { alert("Checkout fail"); } 
+         </script>'; 
+     }
+?>         
     <form action="http://localhost/examfinal/cart/checkout" method="POST">           
         <div class="right">
             <h1>Checkout</h1>

@@ -78,14 +78,24 @@ class CartController extends BaseController {
               } else {
                   $addressErr="";
                   $address = test_input($_POST["address"]);
+              } 
+
+              if($_POST["total_price"]!=0){
+                $error="yes";
+                $quantityErr = "Address is required";
+              } else {
+                $quantityErr="";
+                
               }
               if(!empty($error)){
 
                   $quantity = $this->__ProductModel->totalQuantity();
                   $total_price = $this->__ProductModel->totalPrice();
                   $this->__ProductModel->checkAmountOfCart();
-                  $listProduct =  $this->__ProductModel->listProductOfCart();
-                   $this->view("layouts/client_layout", ["content"=>"cart", "listProduct"=>$listProduct,"error"=>[$nameErr,$emailErr,$phoneErr,$addressErr],"name"=>[$name,$email,$phone,$address], "quantity"=>$quantity, "total_price"=>$total_price]);
+                  $user_id = $_POST["user_id"];
+                  $listProduct =  $this->__ProductModel->listProductOfCart($user_id);
+                  
+                   $this->view("layouts/client_layout", ["content"=>"cart", "listProduct"=>$listProduct,"error"=>[$nameErr,$emailErr,$phoneErr,$addressErr,$quantityErr],"name"=>[$name,$email,$phone,$address], "quantity"=>$quantity, "total_price"=>$total_price]);
               } else {
 
                   $name = test_input($_POST["name"]);
@@ -105,8 +115,8 @@ class CartController extends BaseController {
                     
                 } 
               }
-            
-        }
+        
+        } 
     }
 
 }
