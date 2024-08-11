@@ -66,6 +66,11 @@
         $name = $data["name"];
         
     }
+
+    if(isset($data["errorLogin"])){
+        $errorLogin=$data["errorLogin"];
+        
+    }
     ?>    
      <?php
      if(isset($error[4])){
@@ -74,7 +79,15 @@
                 window.onload = function () { alert("Checkout fail"); } 
          </script>'; 
      }
-?>         
+?>        
+    <?php
+     if(isset($errorLogin)){
+
+         echo '<script type="text/javascript">
+                window.onload = function () { alert("You need to log in first"); } 
+         </script>'; 
+     }
+?>      
     <form action="http://localhost/examfinal/cart/checkout" method="POST">           
         <div class="right">
             <h1>Checkout</h1>

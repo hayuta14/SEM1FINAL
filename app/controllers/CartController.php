@@ -32,7 +32,7 @@ class CartController extends BaseController {
     
     
     public function checkout(){
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if ($_SERVER["REQUEST_METHOD"] == "POST"&&isset($_SESSION["user"])) {
             function test_input($data) {
                 $data = trim($data);
                 $data = stripslashes($data);
@@ -116,7 +116,9 @@ class CartController extends BaseController {
                 } 
               }
         
-        } 
+        } else {
+            $this->view("layouts/client_layout", ["content"=>"cart","errorLogin"=>"yes"]);
+        }
     }
 
 }

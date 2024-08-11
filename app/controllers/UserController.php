@@ -28,6 +28,30 @@ class UserController  extends BaseController {
             $this->view("login");
         }
     }
+
+    public function signup() {
+        
+        if(isset($_POST["username"]) && isset($_POST["password"])) {
+            $username = $_POST["username"];
+            $password = $_POST["password"];
+            $user = $this->__model->login($username, $password);
+            
+            if(isset($user) && $user) {
+                $_SESSION["user"] = $user;
+                if($user["role"] == "admin") {
+                    header("Location: http://localhost/examfinal/home/index");
+                } else {
+                    
+                    header("Location: http://localhost/examfinal/home/index");
+                }
+            } else {
+                header("Location: http://localhost/examfinal/user/login?error=true");
+            }
+        } else {
+            
+            $this->view("signup");
+        }
+    }
     public function logout() {
         if(isset($_SESSION["user"])) {
             $role = $_SESSION["user"]["role"];

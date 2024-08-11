@@ -35,14 +35,16 @@
                     <li class="login__layout <?php echo isset($_SESSION["user"])?"":"disable"?>">
                         
                         <?php if(isset($_SESSION["user"])): ?>
-                        <div class="user__model">HELLO  <?=strtoupper($_SESSION["user"]["username"])?></div>
-                        
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div class="user__model">HELLO  <?=strtoupper($_SESSION["user"]["username"])?></div>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Account</a>
+                                <a class="dropdown-item" href="#">Transaction History</a>
+                                <a class="dropdown-item" href="http://localhost/examfinal/user/logout">Logout</a>
+                            </div>
                     </li>
-                    <li>
-                        <a href="http://localhost/examfinal/user/logout">Logout</a>
-                        <?php else : ?>
-                            
-                        </li>
+                    <?php else : ?>
                     <li>
                         <a href="http://localhost/examfinal/user/login">LOGIN</a>
                         <?php endif; ?>

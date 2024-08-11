@@ -1077,3 +1077,39 @@ h3{
     font-size: var(--small-font-size);
     text-decoration: line-through;
 }
+.dropdown-toggle{
+    display: flex;
+    color: #fff;
+    background: transparent;
+    border: none;
+}
+.dropdown-toggle:hover{
+    background: transparent;
+    border: none;
+}
+
+.dropdown-toggle::after{
+    margin-top: 10px;
+    
+}
+
+.show>.btn-secondary.dropdown-toggle{
+    color: #fff;
+    background: transparent;
+    border: none;
+}
+
+.dropdown-menu{
+    background-color: #545b62;
+    width: 113px;
+    padding: 0px 0px;
+}
+
+.dropdown-item {
+    padding: 8px 12px;
+}
+
+
+.dropdown-item:hover {
+    background-color: #fff;
+}

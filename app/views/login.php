@@ -46,7 +46,7 @@
                 <button type="submit" value="sign in">Login</button>
              </div>
         </form>
-        <!-- <p>New here? <a href="signup.html">Create an Account? </a> </p> -->
+        <p>New here? <a href="http://localhost/examfinal/user/signup">Create an Account? </a> </p>
     </div>
 </body>
 </body>
